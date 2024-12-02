@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/cl_ciclo_vida"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/font_color"
@@ -14,9 +14,26 @@
         android:layout_height="wrap_content"
         android:text="@string/saludo"
         android:textColor="@color/saludo_color"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_ciclo_vida"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.704"
+        app:layout_constraintStart_toEndOf="@+id/btn_ciclo_vida"
+        app:layout_constraintTop_toTopOf="@+id/btn_ciclo_vida"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <Button
+        android:id="@+id/btn_ciclo_vida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ciclo Vida"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="87dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
