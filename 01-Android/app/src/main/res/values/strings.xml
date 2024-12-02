@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ccgr12024b_sjps</string>
+    <string name="saludo">Hola amigos</string>
+    <color name="saludo_color">#12012A</color>
+    <color name="font_color">#2DDC8D</color>
+
+</resources>
