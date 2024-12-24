@@ -2,6 +2,10 @@
     <string name="app_name">ccgr12024b_sjps</string>
     <string name="saludo">Hola amigos</string>
     <color name="saludo_color">#12012A</color>
-    <color name="font_color">#2DDC8D</color>
 
+    <string-array name="string_array_opciones_dialogo">
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miercoles</item>
+    </string-array>
 </resources>
