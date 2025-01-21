@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
@@ -115,11 +116,11 @@ class MainActivity : AppCompatActivity() {
                 irActividad(ECrudEntrenador::class.java)
             }
 
-        val botonIrRecyclerView = findViewById<Button>(R.id.btn_recycler_view)
+        /*val botonIrRecyclerView = findViewById<Button>(R.id.btn_recycler_view)
         botonIrRecyclerView
             .setOnClickListener {
                 irActividad(FRecyclerView::class.java)
-            }
+            }*/
     }
     fun irActividad(clase:Class<*>){
         startActivity(Intent(this, clase))
