@@ -33,7 +33,7 @@ class FRecyclerViewAdaptadorNombreDescripcion (
         fun anadirLikes(){
             numeroLikes = numeroLikes + 1
             likesTextView.text = numeroLikes.toString()
-            //contexto.aumentarTotalLikes()
+            contexto.aumentarTotalLikes()
         }
     }
 
