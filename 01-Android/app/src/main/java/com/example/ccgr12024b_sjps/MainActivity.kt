@@ -116,11 +116,11 @@ class MainActivity : AppCompatActivity() {
                 irActividad(ECrudEntrenador::class.java)
             }
 
-        /*val botonIrRecyclerView = findViewById<Button>(R.id.btn_recycler_view)
+        val botonIrRecyclerView = findViewById<Button>(R.id.btn_recycler_view)
         botonIrRecyclerView
             .setOnClickListener {
                 irActividad(FRecyclerView::class.java)
-            }*/
+            }
     }
     fun irActividad(clase:Class<*>){
         startActivity(Intent(this, clase))
