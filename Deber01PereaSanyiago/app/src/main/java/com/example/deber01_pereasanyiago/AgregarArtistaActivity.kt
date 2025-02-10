@@ -1,6 +1,6 @@
 package com.example.deber01_pereasanyiago
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
@@ -14,140 +14,118 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class AgregarArtistaActivity : AppCompatActivity() {
 
-    private var obraId: Int? = null
-    private lateinit var etTitulo: EditText
-    private lateinit var etAnio: EditText
-    private lateinit var etTecnica: EditText
-    private lateinit var etDimensiones: EditText
-    private lateinit var cbDisponible: CheckBox
+    private var artistaId: Int? = null
+    private lateinit var etNombre: EditText
+    private lateinit var etEdad: EditText
+    private lateinit var cbActivo: CheckBox
+    private lateinit var etNumeroObras: EditText
+    private lateinit var etPromedioValorObras: EditText
     private lateinit var btnGuardar: Button
     private lateinit var btnVerArtista: Button
     private lateinit var dbHelper: DatabaseHelper
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_agregar_obra)
+        setContentView(R.layout.activity_agregar_artista)
 
         // Inicializar vistas
-        etTitulo = findViewById(R.id.etTitulo)
-        etAnio = findViewById(R.id.etAnio)
-        etTecnica = findViewById(R.id.etTecnica)
-        etDimensiones = findViewById(R.id.etDimensiones)
-        cbDisponible = findViewById(R.id.cbDisponible)
-        btnGuardar = findViewById(R.id.btnGuardarObra)
+        etNombre = findViewById(R.id.etNombre)
+        etEdad = findViewById(R.id.etEdad)
+        cbActivo = findViewById(R.id.cbActivo)
+        etNumeroObras = findViewById(R.id.etNumeroObras)
+        etPromedioValorObras = findViewById(R.id.etPromedioValorObras)
+        btnGuardar = findViewById(R.id.btnGuardarArtista)
         btnVerArtista = findViewById(R.id.verArtista)
 
         dbHelper = DatabaseHelper(this)
 
         // Detectar si estamos en modo edición
-        obraId = intent.getIntExtra("OBRA_ID", -1).takeIf { it != -1 }
+        artistaId = intent.getIntExtra("ARTISTA_ID", -1).takeIf { it != -1 }
 
-        if (obraId != null) {
-            // Modo edición: cargar datos
-            cargarDatosObra(obraId!!)
-            verificarCamposLlenos()
+        if (artistaId != null) {
+            cargarDatosArtista(artistaId!!)
         }
-
-        // Inicialmente ocultar el botón de "Ver Artista"
-        btnVerArtista.visibility = Button.GONE
-
-        // Agregar TextWatcher a los campos de texto
-        val textWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                verificarCamposLlenos()
-            }
-        }
-
-        // Asignar el TextWatcher a los campos de texto
-        etTitulo.addTextChangedListener(textWatcher)
-        etAnio.addTextChangedListener(textWatcher)
-        etTecnica.addTextChangedListener(textWatcher)
-        etDimensiones.addTextChangedListener(textWatcher)
 
         btnGuardar.setOnClickListener {
-            val titulo = etTitulo.text.toString()
-            val anio = etAnio.text.toString().toIntOrNull()
-            val tecnica = etTecnica.text.toString()
-            val dimensiones = etDimensiones.text.toString()
-            val disponible = cbDisponible.isChecked
+            val nombre = etNombre.text.toString()
+            val edad = etEdad.text.toString().toIntOrNull()
+            val activo = cbActivo.isChecked
+            val numeroObras = etNumeroObras.text.toString().toIntOrNull()
+            val promedioValorObras = etPromedioValorObras.text.toString().toDoubleOrNull()
 
-            if (titulo.isNotEmpty() && anio != null && tecnica.isNotEmpty() && dimensiones.isNotEmpty()) {
-                if (obraId != null) {
-                    actualizarObra(obraId!!)
+            if (nombre.isNotEmpty() && edad != null && numeroObras != null && promedioValorObras != null) {
+                if (artistaId != null) {
+                    actualizarArtista(artistaId!!, nombre, edad, activo, numeroObras, promedioValorObras)
                 } else {
-                    agregarObra(titulo, anio, tecnica, dimensiones, disponible)
+                    agregarArtista(nombre, edad, activo, numeroObras, promedioValorObras)
                 }
             } else {
                 Toast.makeText(this, "Por favor llena todos los campos", Toast.LENGTH_SHORT).show()
             }
         }
+
+        val botonGoogleMaps = findViewById<Button>(R.id.verArtista)
+        botonGoogleMaps.setOnClickListener {
+            val intent = Intent(this,GGoogleMaps::class.java)
+            startActivity(intent)
+        }
     }
 
-    private fun cargarDatosObra(id: Int) {
+    private fun cargarDatosArtista(id: Int) {
         val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM Obra WHERE id = ?", arrayOf(id.toString()))
+        val cursor = db.rawQuery("SELECT * FROM Artista WHERE id = ?", arrayOf(id.toString()))
 
         if (cursor.moveToFirst()) {
-            etTitulo.setText(cursor.getString(cursor.getColumnIndexOrThrow("titulo")))
-            etAnio.setText(cursor.getInt(cursor.getColumnIndexOrThrow("anio")).toString())
-            etTecnica.setText(cursor.getString(cursor.getColumnIndexOrThrow("tecnica")))
-            etDimensiones.setText(cursor.getString(cursor.getColumnIndexOrThrow("dimensiones")))
-            cbDisponible.isChecked = cursor.getInt(cursor.getColumnIndexOrThrow("disponible")) == 1
+            etNombre.setText(cursor.getString(cursor.getColumnIndexOrThrow("nombre")))
+            etEdad.setText(cursor.getInt(cursor.getColumnIndexOrThrow("edad")).toString())
+            cbActivo.isChecked = cursor.getInt(cursor.getColumnIndexOrThrow("activo")) == 1
+            etNumeroObras.setText(cursor.getInt(cursor.getColumnIndexOrThrow("numeroObras")).toString())
+            etPromedioValorObras.setText(cursor.getDouble(cursor.getColumnIndexOrThrow("promedioValorObras")).toString())
         }
         cursor.close()
     }
 
-    private fun verificarCamposLlenos() {
-        if (etTitulo.text.isNotEmpty() && etAnio.text.isNotEmpty() && etTecnica.text.isNotEmpty() && etDimensiones.text.isNotEmpty()) {
-            btnVerArtista.visibility = Button.VISIBLE
-        } else {
-            btnVerArtista.visibility = Button.GONE
-        }
-    }
 
-    private fun actualizarObra(id: Int) {
+    private fun actualizarArtista(id: Int, nombre: String, edad: Int, activo: Boolean, numeroObras: Int, promedioValorObras: Double) {
         val db = dbHelper.writableDatabase
         val valores = ContentValues().apply {
-            put("titulo", etTitulo.text.toString())
-            put("anio", etAnio.text.toString().toInt())
-            put("tecnica", etTecnica.text.toString())
-            put("dimensiones", etDimensiones.text.toString())
-            put("disponible", if (cbDisponible.isChecked) 1 else 0)
+            put("nombre", nombre)
+            put("edad", edad)
+            put("activo", if (activo) 1 else 0)
+            put("numeroObras", numeroObras)
+            put("promedioValorObras", promedioValorObras)
         }
 
-        val filasActualizadas = db.update("Obra", valores, "id = ?", arrayOf(id.toString()))
+        val filasActualizadas = db.update("Artista", valores, "id = ?", arrayOf(id.toString()))
         if (filasActualizadas > 0) {
-            Toast.makeText(this, "Obra actualizada correctamente", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Artista actualizado correctamente", Toast.LENGTH_SHORT).show()
             finish()
         } else {
-            Toast.makeText(this, "Error al actualizar la obra", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error al actualizar el artista", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun agregarObra(titulo: String, anio: Int, tecnica: String, dimensiones: String, disponible: Boolean) {
+    private fun agregarArtista(nombre: String, edad: Int, activo: Boolean, numeroObras: Int, promedioValorObras: Double) {
         val db = dbHelper.writableDatabase
         val valores = ContentValues().apply {
-            put("titulo", titulo)
-            put("anio", anio)
-            put("tecnica", tecnica)
-            put("dimensiones", dimensiones)
-            put("disponible", if (disponible) 1 else 0)
+            put("nombre", nombre)
+            put("edad", edad)
+            put("activo", if (activo) 1 else 0)
+            put("numeroObras", numeroObras)
+            put("promedioValorObras", promedioValorObras)
         }
 
-        val resultado = db.insert("Obra", null, valores)
+        val resultado = db.insert("Artista", null, valores)
         if (resultado != -1L) {
-            Toast.makeText(this, "Obra agregada exitosamente", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Artista agregado exitosamente", Toast.LENGTH_SHORT).show()
             finish()
         } else {
-            Toast.makeText(this, "Error al agregar la obra", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error al agregar el artista", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -7,4 +7,137 @@
     android:layout_height="match_parent"
     tools:context=".AgregarArtistaActivity">
 
+    <EditText
+        android:id="@+id/etNombre"
+        android:layout_width="315dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="40dp"
+        android:hint="Nombre del artista"
+        app:layout_constraintBottom_toTopOf="@+id/etEdad"
+        app:layout_constraintEnd_toEndOf="@+id/etEdad"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="@+id/etEdad" />
+
+    <EditText
+        android:id="@+id/etEdad"
+        android:layout_width="182dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:hint="Edad"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/cbActivo"
+        app:layout_constraintEnd_toEndOf="@+id/cbActivo"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/cbActivo" />
+
+    <CheckBox
+        android:id="@+id/cbActivo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Activo"
+        app:layout_constraintBottom_toTopOf="@+id/etNumeroObras"
+        app:layout_constraintEnd_toEndOf="@+id/etNumeroObras"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/etNumeroObras" />
+
+    <EditText
+        android:id="@+id/etNumeroObras"
+        android:layout_width="182dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="44dp"
+        android:hint="Número de obras"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/etPromedioValorObras"
+        app:layout_constraintEnd_toEndOf="@+id/etPromedioValorObras"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etPromedioValorObras" />
+
+    <EditText
+        android:id="@+id/etPromedioValorObras"
+        android:layout_width="182dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:hint="Promedio valor obras"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/btnGuardarArtista"
+        app:layout_constraintEnd_toEndOf="@+id/btnGuardarArtista"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="@+id/btnGuardarArtista" />
+
+    <Button
+        android:id="@+id/btnGuardarArtista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="156dp"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/verArtista"
+        android:layout_width="116dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="32dp"
+        android:text="Ubicación"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/btnGuardarArtista"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="@+id/btnGuardarArtista"
+        app:layout_constraintTop_toBottomOf="@+id/btnGuardarArtista" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="136dp"
+        android:layout_marginBottom="32dp"
+        android:text="Artista"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="Artista:"
+        app:layout_constraintBottom_toTopOf="@+id/etNombre"
+        app:layout_constraintEnd_toEndOf="@+id/etNombre"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etNombre" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="212dp"
+        android:layout_marginBottom="4dp"
+        android:text="Edad:"
+        app:layout_constraintBottom_toTopOf="@+id/etEdad"
+        app:layout_constraintEnd_toEndOf="@+id/etEdad" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="188dp"
+        android:layout_marginBottom="12dp"
+        android:text="N. Obras:"
+        app:layout_constraintBottom_toTopOf="@+id/etNumeroObras"
+        app:layout_constraintEnd_toEndOf="@+id/etNumeroObras" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="144dp"
+        android:layout_marginBottom="8dp"
+        android:text="Valor Promedio:"
+        app:layout_constraintBottom_toTopOf="@+id/etPromedioValorObras"
+        app:layout_constraintEnd_toEndOf="@+id/etPromedioValorObras" />
+
+    +
+
 </androidx.constraintlayout.widget.ConstraintLayout>
